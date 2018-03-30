@@ -1,0 +1,27 @@
+{
+  "Credentials":{
+    "sipCoinEmailId" : "rohan183chougule@gmail.com",
+    "sipCoinEmailPass" : "Viewsoniccorei318158114Vi7"
+  },
+
+  "Server":{
+    "IP" : "http://localhost:3000"
+  },
+
+  "Transporter":{
+    "service" : "gmail",
+    "auth" : {
+      "user" : "rohan183chougule@gmail.com",
+      "pass" : "Viewsoniccorei318158114Vi7"
+    }
+  },
+
+  "Captcha":{
+    "key" : "6LdO6j0UAAAAAA04cC4pU1jeWWla3e6cL2Nm7xlz"
+  },
+
+  "Referral":{
+    "Admin" : "SIP35970SIPADM"
+  }
+
+}
