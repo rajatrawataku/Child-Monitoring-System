@@ -652,20 +652,11 @@ app.post('/signup', function(req, res){
 
 //SET MODE TO AUTO OR MANUAL
 app.post('/setMode',function(req,res){
-  request({
-    headers : {'content-type' : 'application/x-www-form-urlencoded'},
-    url : 'http://localhost:5005/setMode',
-    method : 'POST',
-    form : {
-      'mode' : req.body['mode']
-    }
-  },(err,res,body)=>{
-    console.log(body)
-    AM.setMode(body.response, function(result){
-      console.log(result);
-      response = new responseVar(body.response,200,"string")
-      res.status(200).send(response);
-    })
+  mode = req.body['mode'];
+  AM.setMode(mode, function(result){
+    console.log(result);
+    response = new responseVar(mode,200,"string")
+    res.status(200).send(response);
   })
 })
 
