@@ -1,0 +1,139 @@
+@font-face{
+	font-family: logo;
+    src: url('logo.ttf');
+}
+
+.main_frame{
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	width: 100%;
+	height: 100%;
+}
+
+.second_frame{
+	display: none;
+	position: absolute;
+	top:0%;
+	left: 0%;
+	width: 100%;
+	height:100%;
+}
+
+.second_screen{
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	height: 100%;
+	width: 100%;
+}
+
+
+.bgcolor{
+	background: #880e4f;
+}
+
+#canvas{
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	top: 0;
+	left: 0;
+}
+
+#upperHalf{
+	position: absolute;
+	height: 40vh;
+	width: 100vw;
+	top: 0;
+	left: 0;
+}
+
+#upperHalf_dash{
+	position: absolute;
+	height: 10vh;
+	width: 100vw;
+	top: 0;
+	left: 0;
+}
+
+
+.lowerHalf{
+	position: absolute;
+	height: 60vh;
+	width: 100vw;
+	top: 40vh;
+	left: 0;
+}
+
+.lowerHalf_dash{
+		position: absolute;
+		height: 90vh;
+		width: 100vw;
+		top: 10vh;
+		left: 0;
+}
+
+#bg{
+	background: url('bg.png');
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+}
+
+#title{
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	font-size: 6vh;
+	font-family: logo;
+	color: white;
+	transform: translate(-50%,-50%);
+	opacity: 1;
+}
+
+#title_dash{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 5vh;
+	font-family: logo;
+	color: white;
+	transform: translate(-50%,-50%);
+	opacity: 1;
+}
+
+
+#log{
+	font-family: logo;
+}
+
+#logoM{
+	position: absolute;
+	top: 10%;
+	left: 10%;
+	height: auto;
+	width: 10%;
+}
+
+#team{
+	position: absolute;
+	bottom: 0%;
+	right: 05%;
+}
+#returnProfile{
+	display: none;
+}
+#loader{
+	background: #E93978;
+	display: none;
+}
+#doQueryButton{
+	position: absolute;
+	top: 0%;
+	right: 10%;
+	height: auto;
+	width: 10%;
+}

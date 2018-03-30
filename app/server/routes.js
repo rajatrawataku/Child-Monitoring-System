@@ -211,15 +211,7 @@ module.exports = function(app) {
 		 if(req.session.user != null)
 			 res.redirect('/dashboard');
 		 else {
-			 var usd;
-			 var sip;
-			 btcCheck().then((USD)=>{
-				 usd = USD;
-			 }).then((SIP)=>{
-				 res.render('main',{ USD : usd})
-			 }).catch((err)=>{
-				 console.log("Error Occurred on Get Request at '/' : " + err)
-			 })
+       res.render('main')
 		 }
 	 });
 
@@ -252,55 +244,10 @@ module.exports = function(app) {
     });
 });
 
-// main login page //
-	app.get('/login', function(req, res){
-	// check if the user's credentials are saved in a cookie //
-	var usd;
-	var sip;
 
-		if (req.cookies.user == undefined || req.cookies.pass == undefined){
-			btcCheck().then((USD)=>{
-				usd = USD;
-				//return getTokenValue().then((SIP)=>{return SIP});
-			})
-			.then((SIP)=>{
-				//sip = SIP;
-
-				res.render('login', {
-					title: 'SIPcoin Login',
-					USD : usd
-				 });
-
-			})
-		}	else{
-	// attempt automatic login //
-			AM.autoLogin(req.cookies.user, req.cookies.pass, function(o){
-				if (o != null){
-				    req.session.user = o;
-						//access DB and update the latest info
-
-					res.redirect('/dashboard');
-				}	else{
-					btcCheck().then((USD)=>{
-						usd = USD;
-						//return getTokenValue().then((SIP)=>{return SIP});
-					})
-					.then((SIP)=>{
-						//sip = SIP;
-
-						res.render('login', {
-							title: 'SIPcoin Login',
-							USD : usd
-						 });
-
-					})
-				}
-			});
-		}
-	});
 
 // new exchange post login======================================================
-	app.post('/login', function(req, res){
+	app.post('/', function(req, res){
     console.log("post login");
     var username = req.body['username'];
     var password = req.body['password'];
@@ -533,38 +480,7 @@ app.post('/changePassword',function(req,res){
 
 	// creating new accounts //
 		app.get('/signup', function(req, res) {
-
-			var btc;
-			btcCheck().then((BTC)=>{
-				btc = BTC;
-				//return getTokenValue().then((SIP)=>{return SIP});
-			})
-			.then((SIP)=>{
-				if(req.query.ref != undefined)
-				{
-					AM.checkForReferral(req.query.ref,function(result){
-						if(result) {
-							res.render('signup', {
-								title: 'Signup',
-								countries : CT,
-								USD : btc,
-								ref : req.query.ref
-							 });
-						}
-						else {
-							res.render('signup', {
-								title: 'Signup',
-								countries : CT,
-								USD : btc,
-								ref : ""
-							 });
-						}
-					})
-				}
-				else {
-					res.render('signup', {  title: 'Signup', countries : CT, USD : btc, SIP : SIP, ref : "" });
-				}
-			})
+      res.render('signup');
 		});
 
 
@@ -589,10 +505,8 @@ app.post('/signup', function(req, res){
 				}else {
 
           var newAccount = {
-                  	name 	: req.body['name'],
                   	email 	: req.body['emailUser'],
                   	user 	: req.body['username'],
-                    mobile : req.body['mobileUser'],
                   	pass	: req.body['passUser'],
                     twoFA : false,
                     twoFAsecret : "TWO FA DISABLED",
@@ -608,21 +522,36 @@ app.post('/signup', function(req, res){
 
 
           AM.addNewAccount(newAccount, function(e){
-            var mailOptions = {
-              from: sipCoinEmailId,
-              to: newAccountForReferral.email,
-              subject: 'Child Monitoring || Successful Registration',
-              html: part1 +URLforVerification+part2,
-            };
 
-            transporter.sendMail(mailOptions, function(error, info){
-              if (error) {
-                console.log("Email Not Sent, Error : " + error);
-              } else {
-                console.log('Email Sent: ' + info.response);
-              }
+            console.log('created');
+            console.log(e);
+
+            if(e){
+              res.status(400).send(e);
+            }else {
+
+              var mailOptions = {
+                from: sipCoinEmailId,
+                to: newAccount.email,
+                subject: 'Child Monitoring || Successful Registration',
+                html: part1 +URLforVerification+part2,
+              };
+
+              // transporter.sendMail(mailOptions, function(error, info){
+              //   if (error) {
+              //     console.log("Email Not Sent, Error : " + error);
+              //   } else {
+              //     console.log('Email Sent: ' + info.response);
+              //   }
+              //   res.status(200).send('ok');
+              // });
+
               res.status(200).send('ok');
-            });
+
+            }
+
+
+
           });
 
         } //End of else 1
