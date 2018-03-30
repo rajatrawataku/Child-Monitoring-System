@@ -38,6 +38,15 @@ $(document).ready(function(){
         // mail not approved bro
       }
 
+      if(responseText == 'open_dasboard')
+      {
+        window.location.href='/dashboard';
+      }
+
+      if(responseText == 'open_2fa')
+      {
+        window.location.href='/twofa';
+      }
 
       // if (status == 'success') window.location.href = '/dashboard';
 
@@ -105,6 +114,13 @@ $(document).ready(function(){
       if(responseText == 'ok')
       {
         console.log('account created');
+        $('.heading_data').html('Registration Successful');
+        $('.result_data').html('Welcome to Child Care Home Automation System <br> <br> Redirecting to Login Page ......');
+        $('.modal').modal('open');
+
+        setTimeout(function(){
+          window.location.href='/';
+        },3000);
       }
 
       console.log('hey sucess');
@@ -140,6 +156,67 @@ $(document).ready(function(){
     },
     error : function(e){
 
+
+    }
+  });
+
+
+  //  twoFA
+
+  $('#twofaForm').ajaxForm({
+    beforeSubmit : function(formData, jqForm, options){
+
+      $('#loader').css('display','block');
+
+      return true;
+
+    },
+    success	: function(responseText, status, xhr, $form){
+
+      console.log(responseText);
+
+      $('#loader').css('display','none');
+
+      if(responseText == 'Captcha_not_selected')
+      {
+        $('.heading_data').html('Captch Issues');
+        $('.result_data').html('Captcha Not Selected');
+        $('.modal').modal('open');
+      }
+
+      if(responseText == 'captcha_not_validated')
+      {
+        $('.heading_data').html('Captch Issues');
+        $('.result_data').html('Captcha Not Validated');
+        $('.modal').modal('open');
+      }
+
+
+      if(responseText == 'open_active_mail_jade')
+      {
+        // mail not approved bro
+      }
+
+      if(responseText == 'open_dasboard')
+      {
+        window.location.href='/dashboard';
+      }
+
+      if(responseText == 'open_2fa')
+      {
+        window.location.href='/twofa';
+      }
+
+      // if (status == 'success') window.location.href = '/dashboard';
+
+    },
+    error : function(e){
+
+      $('#loader').css('display','none');
+
+      $('.heading_data').html('Wrong Credentials');
+      $('.result_data').html('Either Username/Password is wrong');
+      $('.modal').modal('open');
 
     }
   });

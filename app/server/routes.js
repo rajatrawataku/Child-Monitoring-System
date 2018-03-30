@@ -215,6 +215,18 @@ module.exports = function(app) {
 		 }
 	 });
 
+
+   app.get('/dashboard',function(req,res){
+
+     if(req.session.user!=null){
+
+       res.render('dashboard');
+
+     }else {
+       res.redirect('/');
+     }
+   });
+
 // resend activation email
 	app.post('/resendActivation',function(req,res){
     AM.getDataForResend(req.body['username'],function(data){
@@ -330,7 +342,6 @@ module.exports = function(app) {
       }else {
         res.redirect('/');
       }
-
   });
 
   // post for 2fa

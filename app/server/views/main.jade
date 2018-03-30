@@ -30,7 +30,7 @@ html
                       br
                       .input-field.col.s12
                         i.material-icons.prefix(style='color:#e91e63;') account_circle
-                        input#icon_user_name(type='text', name='name', required='',style='background-color:white;border-bottom:1px #e91e63 solid')
+                        input#icon_user_name(type='text', name='username', required='',style='background-color:white;border-bottom:1px #e91e63 solid')
                         label(for='icon_user_name') User Name
                       .input-field.col.s12
                         i.material-icons.prefix(style='color:#e91e63;') vpn_key
@@ -49,7 +49,7 @@ html
                           | Register
 
 
-        #loader.lowerHalf.newColor
+        #loader.lowerHalf.newColor(style='z-index:1000;top:30vh;height:70vh;')
           div(style='transform: translate(-50%,-50%);position: absolute;top:50%;left: 50%;', align='center')
             img#loadr(src='css/loader.gif', height='50%', width='50%')
             #completion.white-text
