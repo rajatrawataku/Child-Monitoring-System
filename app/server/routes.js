@@ -664,7 +664,7 @@ app.post('/setMode',function(req,res){
 app.get('/turnFanON',function(req,res){
   request({
     headers : {'content-type' : 'application/x-www-form-urlencoded'},
-    url : 'http://localhost:5005/turnFanON',
+    url : Server.Pi + ':5005/turnFanON',
     method : 'GET',
   },(err,res,body)=>{
     console.log(body)
@@ -683,7 +683,7 @@ app.get('/turnFanON',function(req,res){
 app.get('/turnFanOFF',function(req,res){
   request({
     headers : {'content-type' : 'application/x-www-form-urlencoded'},
-    url : 'http://localhost:5005/turnFanOFF',
+    url :  Server.Pi + ':5005/turnFanOFF',
     method : 'GET',
   },(err,res,body)=>{
     console.log(body)
@@ -702,7 +702,7 @@ app.get('/turnFanOFF',function(req,res){
 app.get('/turnLightOFF',function(req,res){
   request({
     headers : {'content-type' : 'application/x-www-form-urlencoded'},
-    url : 'http://localhost:5005/turnLightOFF',
+    url :  Server.Pi + ':5005/turnLightOFF',
     method : 'GET',
   },(err,res,body)=>{
     console.log(body)
@@ -721,7 +721,7 @@ app.get('/turnLightOFF',function(req,res){
 app.get('/turnLightON',function(req,res){
   request({
     headers : {'content-type' : 'application/x-www-form-urlencoded'},
-    url : 'http://localhost:5005/turnLightON',
+    url :  Server.Pi + ':5005/turnLightON',
     method : 'GET',
   },(err,res,body)=>{
     console.log(body)
@@ -740,7 +740,7 @@ app.get('/turnLightON',function(req,res){
 app.get('/turnMusicON',function(req,res){
   request({
     headers : {'content-type' : 'application/x-www-form-urlencoded'},
-    url : 'http://localhost:5005/turnMusicON',
+    url :  Server.Pi + ':5005/turnMusicON',
     method : 'GET',
   },(err,res,body)=>{
     console.log(body)
@@ -759,7 +759,7 @@ app.get('/turnMusicON',function(req,res){
 app.get('/turnMusicOFF',function(req,res){
   request({
     headers : {'content-type' : 'application/x-www-form-urlencoded'},
-    url : 'http://localhost:5005/turnMusicOFF',
+    url :  Server.Pi + ':5005/turnMusicOFF',
     method : 'GET',
   },(err,res,body)=>{
     console.log(body)
