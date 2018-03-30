@@ -6,6 +6,7 @@ console.log("========================= NODE ENVIRONMENT : " + process.env.NODE_E
 var CT = require('./modules/country-list');
 var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
+var responseVar = require('/modules/responseVar');
 var request = require('request');
 var Promise = require("bluebird");
 var moment 		= require('moment');
@@ -656,6 +657,133 @@ app.post('/signup', function(req, res){
       }
     })
 	});
+
+
+//################################  CHANGE STATES MANUALLY ##############################################
+
+//SET MODE TO AUTO OR MANUAL
+app.post('/setMode',function(req,res){
+  mode = req.body['mode'];
+  AM.setMode(mode, function(result){
+    console.log(result);
+    response = new responseVar(mode,200,"string")
+    res.status(200).send(response);
+  })
+})
+
+// TURN FAN ON MANUALLY
+app.get('/turnFanON',function(req,res){
+  request({
+    headers : {'content-type' : 'application/x-www-form-urlencoded'},
+    url : Server.Pi + ':5005/turnFanON',
+    method : 'GET',
+  },(err,res,body)=>{
+    console.log(body)
+    purpose = "temp";
+    attri = "fanState"
+    state = true;
+    AM.setStatus(purpose, attri, state, function(result){
+      console.log(result);
+      response = new responseVar("ON",200,"string");
+      res.status(200).send(response);
+    })
+  })
+})
+
+//TURN FAN OFF MANUALLY
+app.get('/turnFanOFF',function(req,res){
+  request({
+    headers : {'content-type' : 'application/x-www-form-urlencoded'},
+    url :  Server.Pi + ':5005/turnFanOFF',
+    method : 'GET',
+  },(err,res,body)=>{
+    console.log(body)
+    purpose = "temp";
+    attri = "fanState"
+    state = false;
+    AM.setStatus(purpose, attri, state, function(result){
+      console.log(result);
+      response = new responseVar("OFF",200,"string");
+      res.status(200).send(response);
+    })
+  })
+})
+
+//TURN LIGHT OFF MANUALLY
+app.get('/turnLightOFF',function(req,res){
+  request({
+    headers : {'content-type' : 'application/x-www-form-urlencoded'},
+    url :  Server.Pi + ':5005/turnLightOFF',
+    method : 'GET',
+  },(err,res,body)=>{
+    console.log(body)
+    purpose = "LDR";
+    attri = "lightState"
+    state = false;
+    AM.setStatus(purpose, attri, state, function(result){
+      console.log(result);
+      response = new responseVar("OFF",200,"string");
+      res.status(200).send(response);
+    })
+  })
+})
+
+//TURN LIGHT ON MANUALLY
+app.get('/turnLightON',function(req,res){
+  request({
+    headers : {'content-type' : 'application/x-www-form-urlencoded'},
+    url :  Server.Pi + ':5005/turnLightON',
+    method : 'GET',
+  },(err,res,body)=>{
+    console.log(body)
+    purpose = "LDR";
+    attri = "lightState"
+    state = true;
+    AM.setStatus(purpose, attri, state, function(result){
+      console.log(result);
+      response = new responseVar("ON",200,"string");
+      res.status(200).send(response);
+    })
+  })
+})
+
+//TURN MUSIC ON MANUALLY
+app.get('/turnMusicON',function(req,res){
+  request({
+    headers : {'content-type' : 'application/x-www-form-urlencoded'},
+    url :  Server.Pi + ':5005/turnMusicON',
+    method : 'GET',
+  },(err,res,body)=>{
+    console.log(body)
+    purpose = "sound";
+    attri = "musicState"
+    state = true;
+    AM.setStatus(purpose, attri, state, function(result){
+      console.log(result);
+      response = new responseVar("ON",200,"string");
+      res.status(200).send(response);
+    })
+  })
+})
+
+//TURN MUSIC OFF MANUALLY
+app.get('/turnMusicOFF',function(req,res){
+  request({
+    headers : {'content-type' : 'application/x-www-form-urlencoded'},
+    url :  Server.Pi + ':5005/turnMusicOFF',
+    method : 'GET',
+  },(err,res,body)=>{
+    console.log(body)
+    purpose = "sound";
+    attri = "musicState"
+    state = false;
+    AM.setStatus(purpose, attri, state, function(result){
+      console.log(result);
+      response = new responseVar("OFF",200,"string");
+      res.status(200).send(response);
+    })
+  })
+})
 
 
 //redirect to main page if wrong routes tried
