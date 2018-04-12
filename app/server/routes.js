@@ -6,7 +6,7 @@ console.log("========================= NODE ENVIRONMENT : " + process.env.NODE_E
 var CT = require('./modules/country-list');
 var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
-var responseVar = require('/modules/responseVar');
+var responseVar = require('./modules/responseVar');
 var request = require('request');
 var Promise = require("bluebird");
 var moment 		= require('moment');
