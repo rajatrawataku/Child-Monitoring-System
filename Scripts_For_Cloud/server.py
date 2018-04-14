@@ -2,7 +2,7 @@ import requests
 import json
 import time
 import yagmail
-yag = yagmail.SMTP("rohan183chougule@gmail.com", 'Viewsoniccorei318158114Vi7')
+yag = yagmail.SMTP("email", 'password')
 
 
 from pymongo import MongoClient
@@ -27,7 +27,7 @@ while True:
                 response = json.loads(r.text);
                 print("Fan State : " + response['response']);
                 db.accounts.update_one({"purpose":"temp"},{'$set':{"fanState":True}});
-                yag.send("rohan183chougule@gmail.com", "Baby", "Needs Help")
+                yag.send("emailTo", "Baby", "Needs Help")
             else:
                 r = requests.get(PiIP + "turnFanOFF");
                 response = json.loads(r.text);
