@@ -18,7 +18,7 @@ html
             .col.s4.offset-s2
               h5  Change Mode 
             .col.s4
-              .switch(style='padding-top:17px;')
+              .switch.switch_div_mode(style='padding-top:17px;')
                 label
                   | Manual
                   input(type='checkbox')
@@ -26,40 +26,40 @@ html
                   |             Auto
               br
               br
-            .col.s4.center
+            .col.s4.center.manual_control
               .card-panel
                 span
                   | Light Controls
                   hr
-                  .switch(style='padding-top:17px;')
+                  .switch.switch_div_light(style='padding-top:17px;')
                     label
-                      | On
+                      | Off
                       input(type='checkbox')
-                      span.lever
-                      |             Off
-            .col.s4.center
+                      span.lever.switch_light
+                      |             On
+            .col.s4.center.manual_control
               .card-panel
                 span
                   | Fan Controls
                   hr
-                  .switch(style='padding-top:17px;')
+                  .switch.switch_div_fan(style='padding-top:17px;')
                     label
-                      | On
+                      | Off
                       input(type='checkbox')
-                      span.lever
-                      |             Off
+                      span.lever.switch_fan
+                      |             On
 
-            .col.s4.center
+            .col.s4.center.manual_control
               .card-panel
                 span
                   | Music Controls
                   hr
-                  .switch(style='padding-top:17px;')
+                  .switch.switch_div_music(style='padding-top:17px;')
                     label
-                      | On
+                      | Off
                       input(type='checkbox')
-                      span.lever
-                      |             Off
+                      span.lever.switch_music
+                      |             On
               
     .main_frame
       #canvas
@@ -72,7 +72,9 @@ html
                 .row
                   .col.s12.center
                     h5 Live Sound Intensity 
-                    hr(width='400')
+                    hr
+                  //- .col.s12.center
+                  //-   img(src='http://192.168.43.54:5000/video_feed',height="400",width="400")
                   .col.s12
                     #sound_div
                     // enter chart here
@@ -90,17 +92,25 @@ html
               .card
                 .row
                   .col.s12.center
-                    h5 Live Light Intensity 
+                    h5 Live Darkness Level 
                     hr(width='400')
                   .col.s12
                     #light_div
+           .col.l6.offset-l3.m12.s12
+            .card
+              .row
+                .col.s12.center
+                  h5 Live Video Feed
+                  hr
+                .col.s12.center
+                  img(src='http://192.168.43.54:5000/video_feed',height="400",width="700")
 
         #upperHalf_dash.bgcolor.z-depth-5
           #bg
             #title_dash
               a.tooltipped(data-position='bottom', data-delay='50', data-tooltip='Know More, Do Better', style='color: white') Dashboard
             #room_setting
-              a.waves-effect.waves-light.btn-small
+              a.waves-effect.waves-light.btn-small.modal-trigger(href='#modal1')
                 i.material-icons.right settings_applications
                 | Room Settings
 
@@ -119,6 +129,224 @@ html
           var light_current_Value=0;
           var temp_current_Value=0;
           
+          //- if(localStorage.getItem("current_fan_value")==null)
+          //- {
+          //-     localStorage.setItem("current_fan_value","0");
+          //- }else {
+          //-     if(localStorage.getItem("current_fan_value")){
+          //-       $('.switch_fan').click();
+          //-     }
+          //- }
+          //- 
+          //- if(localStorage.getItem("current_light_value")==null)
+          //- {
+          //-     localStorage.setItem("current_light_value","0");
+          //- }else {
+          //-     if(localStorage.getItem("current_light_value")==1){
+          //-       $('.switch_light').click();
+          //-     }
+          //- }
+          //- 
+          //- if(localStorage.getItem("current_music_value")==null)
+          //- {
+          //-     localStorage.setItem("current_music_value","0");
+          //- }else {
+          //-     if(localStorage.getItem("current_music_value")){
+          //-       $('.switch_music').click();
+          //-     }
+          //- }
+
+          // set initial values
+          
+          
+          
+          $(".switch_div_music").find("input[type=checkbox]").on("change",function() {
+              var status = $(this).prop('checked');
+              console.log(status);
+              
+              if(status)
+              {
+                  var input_data={'mode':'auto'};
+                  $.ajax({
+                    type: 'GET',
+                    crossOrigin:true,
+
+                    contentType: 'application/json',
+
+                    url: 'http://192.168.43.121:5008/play',
+
+                    success: function(result) {
+                      console.log(result);
+                    },error:function(err){
+                      console.log(err);
+                    }
+                  });
+                
+              } else {
+                
+                var input_data={'mode':'manual'};
+
+                $.ajax({
+                  type: 'GET',
+                  crossOrigin:true,
+                  contentType: 'application/json',
+                  url: 'http://192.168.43.121:5008/closePlay',
+                  success: function(result) {
+                    console.log(result);
+                  },error:function(err){
+                    console.log('boo sound nahi aaya');
+                  }
+                });
+                
+              }
+          });
+
+          
+          $(".switch_div_mode").find("input[type=checkbox]").on("change",function() {
+              var status = $(this).prop('checked');
+              console.log(status);
+              
+              if(status)
+              {
+                  var input_data={'mode':'auto'};
+                  $.ajax({
+                    type: 'POST',
+                    
+                    data: JSON.stringify(input_data),
+
+                    crossOrigin:true,
+
+                    contentType: 'application/json',
+
+                    url: 'http://192.168.43.121:3000/setMode',
+
+                    success: function(result) {
+                      console.log(result);
+                      
+                      $('.manual_control').css('display','none');
+
+                    },error:function(err){
+                      console.log(err);
+                    }
+                  });
+                
+              } else {
+                
+                var input_data={'mode':'manual'};
+
+                $.ajax({
+                  type: 'POST',
+
+                  crossOrigin:true,
+                  data: JSON.stringify(input_data),
+
+                  contentType: 'application/json',
+
+                  url: 'http://192.168.43.121:3000/setMode',
+
+                  success: function(result) {
+                    console.log(result);
+                    $('.manual_control').css('display','block');
+                  },error:function(err){
+
+                  }
+                });
+                
+              }
+          });
+
+          
+          $(".switch_div_light").find("input[type=checkbox]").on("change",function() {
+              var status = $(this).prop('checked');
+              console.log(status);
+              
+              if(status)
+              {
+                  $.ajax({
+                    type: 'GET',
+
+                    crossOrigin:true,
+
+                    contentType: 'application/json',
+
+                    url: 'http://192.168.43.57:5005/turnLightON',
+
+                    success: function(result) {
+
+                    },error:function(err){
+
+                    }
+                  });
+                
+              } else {
+                
+                $.ajax({
+                  type: 'GET',
+
+                  crossOrigin:true,
+
+
+                  contentType: 'application/json',
+
+                  url: 'http://192.168.43.57:5005/turnLightOFF',
+
+                  success: function(result) {
+
+                  },error:function(err){
+
+                  }
+                });
+                
+              }
+          });
+          
+          $(".switch_div_fan").find("input[type=checkbox]").on("change",function() {
+              var status = $(this).prop('checked');
+              console.log(status);
+              
+              if(status)
+              {
+                  $.ajax({
+                    type: 'GET',
+
+                    crossOrigin:true,
+
+                    contentType: 'application/json',
+
+                    url: 'http://192.168.43.57:5005/turnFanON',
+
+                    success: function(result) {
+
+                    },error:function(err){
+
+                    }
+                  });
+                
+              } else {
+                
+                $.ajax({
+                  type: 'GET',
+
+                  crossOrigin:true,
+
+
+                  contentType: 'application/json',
+
+                  url: 'http://192.168.43.57:5005/turnFanOFF',
+
+                  success: function(result) {
+
+                  },error:function(err){
+
+                  }
+                });
+                
+              }
+          });
+
+          
+          var current_fan_value=localStorage.getItem("current_fan_value");
+          var current_music_value=localStorage.getItem("current_music_value");
           
           
           // Graph Sound Function
@@ -140,6 +368,29 @@ html
                             // set up the updating of the chart each second
                             var series = this.series[0];
                             setInterval(function () {
+                              
+                              $.ajax({
+                                type: 'GET',
+
+                                crossOrigin:true,
+
+                                contentType: 'application/json',
+
+                                url: 'http://192.168.43.134:5011/getSound',
+
+                                success: function(result) {
+                                  console.log(result);
+                                  var x = (new Date()).getTime(), // current time
+                                      y = parseFloat(result);
+                                  series.addPoint([x, y], true, true);
+
+                                },error:function(err){
+
+                                }
+                              });
+
+                              
+                                
                                 var x = (new Date()).getTime(), // current time
                                     y = sound_current_Value;
                                 series.addPoint([x, y], true, true);
@@ -148,7 +399,7 @@ html
                     }
                 },
                 title: {
-                    text: 'Live Sound Level'
+                    text: 'Sound Level'
                 },
                 xAxis: {
                     type: 'datetime',
@@ -188,7 +439,7 @@ html
                         for (i = -19; i <= 0; i += 1) {
                             data.push({
                                 x: time + i * 1000,
-                                y: 0.2
+                                y: 6
                             });
                         }
                         return data;
@@ -215,18 +466,39 @@ html
                     marginRight: 10,
                     events: {
                         load: function () {
+                          
+                          
                             // set up the updating of the chart each second
                             var series = this.series[0];
                             setInterval(function () {
-                                var x = (new Date()).getTime(), // current time
-                                    y = temp_current_Value;
-                                series.addPoint([x, y], true, true);
+                                
+                              $.ajax({
+                                type: 'GET',
+
+                                crossOrigin:true,
+
+                                contentType: 'application/json',
+
+                                url: 'http://192.168.43.57:5005/getTemp',
+
+                                success: function(result) {
+                                    
+                                  var x = (new Date()).getTime(), // current time
+                                      y = result.response;
+                                  series.addPoint([x, y], true, true);
+
+                                },error:function(err){
+
+                                }
+                              });
+
+                              
                             }, 2000);
                         }
                     }
                 },
                 title: {
-                    text: 'Live Room Temperature'
+                    text: 'Room Temperature'
                 },
                 xAxis: {
                     type: 'datetime',
@@ -266,7 +538,7 @@ html
                         for (i = -19; i <= 0; i += 1) {
                             data.push({
                                 x: time + i * 1000,
-                                y: 0.2
+                                y: 25
                             });
                         }
                         return data;
@@ -275,6 +547,7 @@ html
             }); 
             
           }
+          
           
           // Graph function Light Intensity
           
@@ -296,15 +569,34 @@ html
                             // set up the updating of the chart each second
                             var series = this.series[0];
                             setInterval(function () {
-                                var x = (new Date()).getTime(), // current time
-                                    y = light_current_Value;
-                                series.addPoint([x, y], true, true);
+                              
+                              $.ajax({
+                                type: 'GET',
+
+                                crossOrigin:true,
+
+                                contentType: 'application/json',
+
+                                url: 'http://192.168.43.57:5005/getLDR',
+
+                                success: function(result) {
+                                    
+                                  var x = (new Date()).getTime(), // current time
+                                      y = result.response;
+                                  series.addPoint([x, y], true, true);
+
+                                },error:function(err){
+
+                                }
+                              });
+
+                              
                             }, 2000);
                         }
                     }
                 },
                 title: {
-                    text: 'Light Intensity'
+                    text: 'Darkness Level'
                 },
                 xAxis: {
                     type: 'datetime',
@@ -334,7 +626,7 @@ html
                     enabled: false
                 },
                 series: [{
-                    name: 'Light Intensity',
+                    name: 'Darkness Level',
                     data: (function () {
                         // generate an array of random data
                         var data = [],
@@ -344,7 +636,7 @@ html
                         for (i = -19; i <= 0; i += 1) {
                             data.push({
                                 x: time + i * 1000,
-                                y: 0.2
+                                y: 700
                             });
                         }
                         return data;
@@ -354,103 +646,13 @@ html
             
           }
           
+        
           
-          function soundIntensityLevel(){
-            
-            
-            console.log('Sound Intensity active');
-
-            var socket = io.connect('http://192.168.43.121:5000');
-            socket.on('connect', function() {
-                socket.emit('my_event', {data: 'I\'m connected!'});
-            });
-
-            socket.emit('my_ping');
-            
-            setInterval(()=>{
-              socket.emit('maintain');
-            },2000)
-            
-            socket.on("maintain2",function(){
-              console.log("maintaining connection ....")
-            })
-
-            socket.on('my_pong', function(message) {
-                console.log(message.data)
-                sound_current_Value=message.data;
-            });
-          
-          }
-          
-          function temperatuteIntesityLevel(){
-            
-            console.log('Temperature is active');
-            
-            var socket = io.connect('http://192.168.43.121:5001');
-            socket.on('connect', function() {
-                socket.emit('my_event', {data: 'I\'m connected!'});
-            });
-              
-            setInterval(()=>{
-            socket.emit('my_ping');
-            },2000)
-
-            setInterval(()=>{
-            socket.emit('maintain');
-            },2000)
-
-            socket.on("maintain2",function(){
-            console.log("maintaining connection ....")
-            })
-            
-            socket.on('my_pong', function(message) {
-                console.log(message.data)
-                temp_current_Value=message.data;
-            });
-            
-          }
-          
-          function lightIntensityLevel(){
-            
-            console.log('Light Intensity active');
-
-            
-            var socket = io.connect('http://192.168.43.121:5002');
-            socket.on('connect', function() {
-                socket.emit('my_event', {data: 'I\'m connected!'});
-            });
-              
-            setInterval(()=>{
-            socket.emit('my_ping');
-            },2000)
-
-            setInterval(()=>{
-            socket.emit('maintain');
-            },2000)
-
-            socket.on("maintain2",function(){
-            console.log("maintaining connection ....")
-            })
-            
-            socket.on('my_pong', function(message) {
-                console.log(message.data)
-                light_current_Value=message.data;
-            });
-            
-          }
-
-          //-  calling light function
-          lightIntensityLevel();
-          lightIntensityGraphFunction();    
-          
-          // calling sound function
-          soundIntensityLevel();
-          soundIntensityGraphFunction();
-          
-          // calling temperatur function 
-          temperatuteIntesityLevel();
+          lightIntensityGraphFunction();
           temperatureGraphFunction();
-          
+          soundIntensityGraphFunction();
+
+
         });
 
       

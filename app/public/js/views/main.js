@@ -5,6 +5,7 @@ $(document).ready(function(){
   // login post request
 
   $('#login').ajaxForm({
+
     beforeSubmit : function(formData, jqForm, options){
 
       $('#loader').css('display','block');
