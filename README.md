@@ -1,5 +1,6 @@
 ***Child Monitoring System***
-Full-fledged Web Interface with Complete Backend
+
+**Full-fledged Web Interface with Complete Backend**
 
 ++++++++++ FEATURES ++++++++++++
 1. Real Time Video Feed and Child Detection
