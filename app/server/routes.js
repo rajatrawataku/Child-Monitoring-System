@@ -6,7 +6,7 @@ console.log("========================= NODE ENVIRONMENT : " + process.env.NODE_E
 var CT = require('./modules/country-list');
 var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
-var responseVar = require('/modules/responseVar');
+var responseVar = require('./modules/responseVar');
 var request = require('request');
 var Promise = require("bluebird");
 var moment 		= require('moment');
@@ -664,6 +664,7 @@ app.post('/signup', function(req, res){
 //SET MODE TO AUTO OR MANUAL
 app.post('/setMode',function(req,res){
   mode = req.body['mode'];
+  console.log(mode);
   AM.setMode(mode, function(result){
     console.log(result);
     response = new responseVar(mode,200,"string")
@@ -751,7 +752,7 @@ app.get('/turnLightON',function(req,res){
 app.get('/turnMusicON',function(req,res){
   request({
     headers : {'content-type' : 'application/x-www-form-urlencoded'},
-    url :  Server.Pi + ':5005/turnMusicON',
+    url :  Server.Addr + ':5006',
     method : 'GET',
   },(err,res,body)=>{
     console.log(body)
