@@ -1,7 +1,7 @@
 {
   "Credentials":{
     "sipCoinEmailId" : "rohan183chougule@gmail.com",
-    "sipCoinEmailPass" : "Viewsoniccorei318158114Vi7"
+    "sipCoinEmailPass" : ""
   },
 
   "Server":{
@@ -14,7 +14,7 @@
     "service" : "gmail",
     "auth" : {
       "user" : "rohan183chougule@gmail.com",
-      "pass" : "Viewsoniccorei318158114Vi7"
+      "pass" : ""
     }
   },
 

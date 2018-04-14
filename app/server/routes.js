@@ -100,69 +100,6 @@ var ethCheck = function(){
   })
 }
 
-//account balance via blockchain
-var acntBalance = function(address){
-  return new Promise(function(resolve,reject){
-    request({
-      headers : {'content-type' : 'application/x-www-form-urlencoded'},
-      url : 'http://54.169.149.54:9326/acntBalance',
-      method : 'POST',
-      form : {
-        'apikey' : "ironmandiesininfinityWars",
-        'address' : address //"0x57E43858eA63b9e1F8fA21Fa4C6e571195fCf74F"
-      }
-    },(err,res,body)=>{
-      console.log(body)
-      resolve(body); //body.etherBalance and body.tokenBalance
-    })
-  })
-}
-
-//create wallet address on ether blockchain
-var createAccount = function(username){
-  return new Promise(function(resolve,reject){
-    request({
-      headers : {'content-type' : 'application/x-www-form-urlencoded'},
-      url : 'http://54.169.149.54:9326/ethAcnt',
-      method : "POST",
-      form : {
-        'apikey' : "ironmandiesininfinityWars",
-        'username' : username
-      }
-    },(err,res,body)=>{
-      //console.log(body)
-      resolve(body) //body.address , body.privateKey
-    })
-  })
-}
-
-//////////////////////////////OLD ICO///////////////////////////////////////////
-
-// var getPublicAddress = function(TID){
-// 	return new Promise(function(resolve,reject){
-//
-// 		if(process.env.NODE_ENV == "production")
-// 		{
-// 			var API = 'https://api.blockchain.info/v2/receive?';
-// 			var xPub = 'xpub6D9eFNDYtCsbwd7xQdGDeQX9SejSpAFsBKRNzaViBprjXcoHs6933e9STs61Boo4P3REpeLNRXv1FW9oKWZp43PVTSD5AZbAFny9MFGHMb9';
-// 			var callback = 'http%3A%2F%2Fsipcoin.io/getInvoice%3FTID%3D'+TID;
-// 			var key = '09195d68-3873-4237-92fd-cdc6bda54aa4'
-//
-// 			var URL = API + 'xpub=' + xPub + '&callback=' + callback + '&key=' + key;
-//
-// 			request(URL, {json:true}, (err, res, body)=>{
-// 				if(err) { return console.log(err); }
-// 				console.log("received Address : "+body.address);
-// 				resolve(body.address);
-// 			})
-// 		}
-// 		else {
-// 			resolve("12wedfv4rtfgb7ytf56yh98iuhggb");
-// 		}
-//
-// 	});
-// }
-
 
 //get transaction doc with the given invoice id
 var getTransactionDoc = function(TID){
